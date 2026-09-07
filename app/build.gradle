@@ -1,0 +1,19 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.a9cinema.avpm'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.a9cinema.avpm'
+        minSdk 23
+        targetSdk 35
+        versionCode 1
+        versionName '4.2.0'
+    }
+}
+
+dependencies {
+}
