@@ -108,59 +108,7 @@ body {
   overflow-x: hidden;
 }
 
-/* 1. စခရင် အနားသတ်အတိုင်း လှည့်ပတ်ပြေးမည့် Laser Trail Animation */
-@keyframes borderLaserLoop {
-  0% {
-    top: 0; left: 0;
-    width: 140px; height: 3px;
-    background: linear-gradient(90deg, transparent, #00f3ff, #c084fc, #00ff9d);
-    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
-  }
-  25% {
-    top: 0; left: calc(100vw - 140px);
-    width: 140px; height: 3px;
-    background: linear-gradient(90deg, transparent, #00f3ff, #c084fc, #00ff9d);
-    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
-  }
-  25.001% {
-    top: 0; left: calc(100vw - 3px);
-    width: 3px; height: 140px;
-    background: linear-gradient(180deg, transparent, #00f3ff, #c084fc, #00ff9d);
-    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
-  }
-  50% {
-    top: calc(100vh - 140px); left: calc(100vw - 3px);
-    width: 3px; height: 140px;
-    background: linear-gradient(180deg, transparent, #00f3ff, #c084fc, #00ff9d);
-    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
-  }
-  50.001% {
-    top: calc(100vh - 3px); left: calc(100vw - 140px);
-    width: 140px; height: 3px;
-    background: linear-gradient(270deg, transparent, #00f3ff, #c084fc, #00ff9d);
-    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
-  }
-  75% {
-    top: calc(100vh - 3px); left: 0;
-    width: 140px; height: 3px;
-    background: linear-gradient(270deg, transparent, #00f3ff, #c084fc, #00ff9d);
-    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
-  }
-  75.001% {
-    top: calc(100vh - 140px); left: 0;
-    width: 3px; height: 140px;
-    background: linear-gradient(0deg, transparent, #00f3ff, #c084fc, #00ff9d);
-    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
-  }
-  100% {
-    top: 0; left: 0;
-    width: 3px; height: 140px;
-    background: linear-gradient(0deg, transparent, #00f3ff, #c084fc, #00ff9d);
-    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
-  }
-}
-
-/* 2. ပြင်ဆင်ထားသော body::before */
+/* 1. ပြင်ဆင်ထားသော body::before */
 body::before {
   content: "";
   position: fixed;
