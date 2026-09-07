@@ -1,0 +1,1335 @@
+<!doctype html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070b18">
+<title>AI Video Prompt Master V4.3</title>
+<style>
+:root{--bg:#050816;--card:#0c1428;--card2:#101b34;--line:#28385d;--text:#f3f6ff;--muted:#9eacd0;--a:#8b5cf6;--b:#22d3ee;--ok:#34d399;--bad:#fb7185}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body {
+  margin: 0;
+  background-color: #030468;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.05) 0%, transparent 60%),
+    linear-gradient(rgba(34, 211, 238, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Noto Sans Myanmar", "Noto Sans", sans-serif;
+}
+.wrap{width:min(860px,100%);margin:auto;padding:12px 10px 70px}.hero{text-align:center;padding:18px 8px}.badge{display:inline-block;border:1px solid #3b4e7e;border-radius:99px;padding:5px 11px;color:#b9f2ff;font-size:11px}.hero h1{font-size:28px;margin:8px 0;background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9);-webkit-background-clip:text;color:transparent}.hero p{color:var(--muted);font-size:13px;line-height:1.6}
+.card {
+background: linear-gradient(135deg, rgba(10, 18, 38, 0.88), rgba(5, 10, 22, 0.96));
+border: 1px solid rgba(34, 211, 238, 0.28);
+border-radius: 10px;
+padding: 14px;
+margin: 11px 0;
+box-shadow: 0 0 25px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(34, 211, 238, 0.03);
+position: relative;
+}
+.card::before {
+content: "";
+position: absolute;
+top: -1px; left: -1px;
+width: 6px; height: 6px;
+border-top: 2px solid var(--b);
+border-left: 2px solid var(--b);
+}
+.card::after {
+content: "";
+position: absolute;
+bottom: -1px; right: -1px;
+width: 6px; height: 6px;
+border-bottom: 2px solid var(--b);
+border-right: 2px solid var(--b);
+}
+
+input,textarea,select{width:100%;border:1px solid #2b3c62;background:#070d1c;color:var(--text);border-radius:11px;padding:11px;font:inherit;outline:none}textarea{min-height:120px;resize:vertical;line-height:1.55}input:focus,textarea:focus,select:focus{border-color:var(--b);box-shadow:0 0 0 2px #22d3ee18}
+button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;background:#182544;font-weight:800;font-size:13px;cursor:pointer}.primary{width:100%;background:linear-gradient(100deg,#7c3aed,#2563eb,#06b6d4);border:0}.secondary{background:#151f38}.danger{background:#251727;border-color:#613247}.copy{width:100%;margin-top:8px}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:9px}
+.notice{padding:10px;border-radius:12px;background:#0a1930;border:1px solid #244a70;color:#bdd7ff;font-size:12px;line-height:1.55}.status{font-size:12px;color:#9fb0d8;margin-top:8px;line-height:1.5}.out{white-space:pre-wrap;word-break:break-word;background:#040814;border:1px solid #293a60;border-radius:13px;padding:12px;line-height:1.6;font-size:12px;max-height:600px;overflow:auto}.empty{color:#7f8dad;font-size:12px}.item{border:1px solid #26385d;background:#091226;border-radius:14px;padding:11px;margin:9px 0}.itemhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.pill{font-size:10px;color:#bcefff;background:#122544;border:1px solid #29476d;border-radius:99px;padding:4px 7px}.dual{position:relative}.dual button{width:100%;text-align:left;min-height:52px;background:#070d1c}.en{display:block;font-weight:800}.mm{display:block;color:var(--muted);font-size:11px;margin-top:3px}.menu{position:absolute;z-index:100;left:0;right:0;top:calc(100% + 5px);background:#0a1225;border:1px solid #344a76;border-radius:12px;padding:5px;max-height:280px;overflow:auto;box-shadow:0 20px 45px #000a}.menu button{border:0;background:transparent;margin:1px 0}.menu button:hover,.menu button.active{background:#172746}.hidden{display:none}.collapse{text-align:center;margin-top:8px}.collapse button{width:44px;height:44px;border-radius:50%;font-size:20px}.sticky{position:sticky;bottom:8px;z-index:80}.tiny{font-size:11px;color:var(--muted)}.lock{display:flex;gap:8px;align-items:center;font-size:12px;margin-top:8px}
+.bp-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.char-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.bp-card{background:linear-gradient(145deg,#0c1428,#080e1c);border:1px solid #26385d;border-radius:8px;padding:5px 6px;display:flex;flex-direction:column;justify-content:space-between;min-height:65px;cursor:pointer;min-width:0;transition:border-color 0.2s}.bp-card:hover{border-color:var(--b)}.bp-card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:2px;margin-bottom:2px}.bp-card-title{font-weight:800;font-size:9px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bp-card-sub{font-size:8px;color:var(--muted);white-space:nowrap}.bp-card-text{font-size:9px;line-height:1.3;color:#bcefff;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.char-card{background:linear-gradient(145deg,#0c1428,#080e1c);border:1px solid #26385d;border-radius:8px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:72px;cursor:pointer;justify-content:space-between;min-width:0;overflow:hidden;transition:border-color 0.2s}.char-card:hover{border-color:var(--b)}.char-card-title{font-weight:800;font-size:9px;color:#fff;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.char-card-sub{font-size:8px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(2,4,10,0.85);z-index:999;display:flex;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(4px)}.modal-overlay.hidden{display:none}.modal-box{background:linear-gradient(180deg,#101b34,#080e1c);border:1px solid #35476f;border-radius:18px;padding:16px;width:min(520px,100%);box-shadow:0 25px 50px #000c}.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #28385d;padding-bottom:8px;margin-bottom:10px}.modal-header h3{margin:0;font-size:16px;color:#fff}.final-scene{border:1px solid #26385d;background:#091226;border-radius:14px;padding:11px;margin:9px 0}.final-scene .out{max-height:none;margin-top:8px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.row3{grid-template-columns:1fr 1fr}.wrap{padding-left:6px;padding-right:6px}.hero h1{font-size:24px}}
+
+.card h2 {font-size: 16px;margin: 0 0 8px 0;}
+.card summary {font-size: 16px;}
+/* Card ခေါင်းစဉ်ကြီးများ (h2, h3, summary) - Neon Cyan + အလင်းဖြာ Effect */
+.card h2, .card h3, .card summary b, .card summary {
+  color: #00f3ff !important;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+/* Field ခေါင်းစဉ်များ - Laser Purple */
+label {
+  color: #c084fc !important;
+  font-weight: 600;
+}
+
+/* စာသားသေးသေးလေးများ - Matrix Green */
+label span, .sub {
+  color: #00ff9d !important;
+}
+/* ===== ⚡ Animated Cyber Grid & AI Laser Scanline ===== */
+
+/* 1. ဘက်ဂရောင်း ဇယားကွက် လှုပ်ရှားသည့် Animation */
+@keyframes cyberGridMove {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 0 0, 0 0, 0 40px, 0 40px; }
+}
+
+/* 2. အပေါ်အောက် ပြေးနေမည့် AI Laser Scanner Animation */
+@keyframes aiScanline {
+  0% { top: -5%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { top: 105%; opacity: 0; }
+}
+
+/* 3. Card များ အလင်းမှိတ်တုတ် မှိတ်တုတ် Pulse ဖြစ်သည့် Animation */
+@keyframes cyanPulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.25), inset 0 0 12px rgba(0, 243, 255, 0.05); }
+  50% { box-shadow: 0 0 30px rgba(0, 243, 255, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.18); }
+}
+
+/* နောက်ခံအပြင်အဆင် - လှုပ်ရှားနေသော Grid */
+body {
+  background-color: #02040a !important;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.22) 0%, transparent 65%),
+    radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.18) 0%, transparent 55%),
+    linear-gradient(rgba(0, 243, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.08) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px !important;
+  background-attachment: fixed !important;
+  animation: cyberGridMove 6s linear infinite !important;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 1. စခရင် အနားသတ်အတိုင်း လှည့်ပတ်ပြေးမည့် Laser Trail Animation */
+@keyframes borderLaserLoop {
+  0% {
+    top: 0; left: 0;
+    width: 140px; height: 3px;
+    background: linear-gradient(90deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  25% {
+    top: 0; left: calc(100vw - 140px);
+    width: 140px; height: 3px;
+    background: linear-gradient(90deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  25.001% {
+    top: 0; left: calc(100vw - 3px);
+    width: 3px; height: 140px;
+    background: linear-gradient(180deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  50% {
+    top: calc(100vh - 140px); left: calc(100vw - 3px);
+    width: 3px; height: 140px;
+    background: linear-gradient(180deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  50.001% {
+    top: calc(100vh - 3px); left: calc(100vw - 140px);
+    width: 140px; height: 3px;
+    background: linear-gradient(270deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  75% {
+    top: calc(100vh - 3px); left: 0;
+    width: 140px; height: 3px;
+    background: linear-gradient(270deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  75.001% {
+    top: calc(100vh - 140px); left: 0;
+    width: 3px; height: 140px;
+    background: linear-gradient(0deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  100% {
+    top: 0; left: 0;
+    width: 3px; height: 140px;
+    background: linear-gradient(0deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+}
+
+/* 2. ပြင်ဆင်ထားသော body::before */
+body::before {
+  content: "";
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+  animation: borderLaserLoop 6s linear infinite;
+}
+
+/* Card ဘောက်စ်များ (Neon Pulsing Glass) */
+.card {
+  background: rgba(5, 12, 28, 0.85) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(0, 243, 255, 0.4) !important;
+  border-radius: 14px !important;
+  animation: cyanPulse 4s infinite ease-in-out !important;
+  transition: all 0.3s ease !important;
+}
+
+.card:hover {
+  border-color: #00f3ff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(0, 243, 255, 0.7), inset 0 0 25px rgba(0, 243, 255, 0.25) !important;
+}
+
+/* Input / Textarea / Select ဘောက်စ်များအလင်းရောင် */
+input, textarea, select {
+  background: rgba(3, 8, 20, 0.95) !important;
+  border: 1px solid rgba(0, 243, 255, 0.35) !important;
+  color: #00f3ff !important;
+  box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.08) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #00f3ff !important;
+  box-shadow: 0 0 18px rgba(0, 243, 255, 0.5), inset 0 0 12px rgba(0, 243, 255, 0.2) !important;
+}
+/* ===== 🚀 Ultra-Futuristic Sci-Fi Cut-Corner Buttons ===== */
+
+/* ခလုတ် အားလုံးအတွက် မူလ Cyberpunk Style */
+button {
+  position: relative !important;
+  background: rgba(0, 243, 255, 0.08) !important;
+  color: #00f3ff !important;
+  border: 1px solid #00f3ff !important;
+  padding: 12px 24px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  
+  /* Sci-Fi ဒေါင့်စွန်း ဖြတ်တောက်ထားသည့် Shape (Polygon Clip) */
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px) !important;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.25), inset 0 0 10px rgba(0, 243, 255, 0.1) !important;
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.8) !important;
+}
+
+/* Mouse တင်လျှင် ဖြတ်ပြေးမည့် Laser Light Sweep Effect */
+button::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent) !important;
+  transition: 0.5s !important;
+}
+
+/* Hover ဖြစ်ချိန် Glow Effect မြှင့်ခြင်း */
+button:hover::before {
+  left: 100% !important;
+}
+
+button:hover {
+  background: #00f3ff !important;
+  color: #02040a !important;
+  box-shadow: 0 0 25px #00f3ff, 0 0 45px rgba(0, 243, 255, 0.7) !important;
+  text-shadow: none !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Click နှိပ်လိုက်ချိန် Tactile Animation */
+button:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* 🗑️ Delete/Danger ခလုတ်များအတွက် Neon Pink Vibe */
+button.danger {
+  background: rgba(255, 0, 127, 0.08) !important;
+  color: #ff007f !important;
+  border-color: #ff007f !important;
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.25), inset 0 0 10px rgba(255, 0, 127, 0.1) !important;
+  text-shadow: 0 0 8px rgba(255, 0, 127, 0.8) !important;
+}
+
+button.danger:hover {
+  background: #ff007f !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 25px #ff007f, 0 0 45px rgba(255, 0, 127, 0.7) !important;
+}
+
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header class="hero">
+<h1>🎬 AI Video Prompt Master</h1>
+</header>
+
+<section class="card">
+<h2>🔑 Gemini API <span class="sub">(Gemini API ချိတ်ဆက်မှု)</span></h2>
+<div class="grid">
+<div class="field"><label>API Key ထည့်ရန်</label><input id="apiKey" type="password" placeholder="Paste Gemini API key"></div>
+<div class="field"><label>Gemini Model</label><select id="model">
+<option value="gemini-3.7-flash">Gemini 3.7 Flash</option>
+<option value="gemini-3.6-flash">Gemini 3.6 Flash</option>
+<option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+<option value="gemini-3.5-flash-lite" selected>Gemini 3.5 Flash-Lite</option>
+<option value="gemini-3.1-flash-lite">Gemini 3.1 Flash-Lite</option>
+<option value="gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option>
+</select></div>
+</div>
+<div class="row"><button id="saveApi">💾 Save API Key</button><button id="testApi">🔌 Test API</button></div>
+<div id="apiStatus" class="status">API key is stored locally on this device only.</div>
+</section>
+
+<section class="card" id="settingsCard">
+<details open id="settingsDetails">
+<summary><b>⚙️ Video Settings</b> <span class="sub">(ဗီဒီယို သတ်မှတ်ချက်များ)</span></summary>
+<div id="settings" class="grid" style="margin-top:12px"></div>
+</details>
+<div class="collapse"><button id="collapseSettings">⌃</button></div>
+</section>
+
+<section class="card" id="storyInputCard">
+<h2>📝 Story Input <span class="sub">(ဇာတ်လမ်းထည့်ရန်)</span></h2>
+<div class="field"><label>Story Title / Idea <span>ဇာတ်လမ်းခေါင်းစဉ်</span></label><input id="title" placeholder="ဥပမာ - နေမင်းနဲ့ သဇင်"></div>
+<div class="field" style="margin-top:9px"><label>Story / Rough Notes <span>ဇာတ်လမ်း / အကြမ်းဖျင်းမှတ်စု</span></label><textarea id="story" placeholder="ဇာတ်လမ်းကို မြန်မာလိုဖြစ်စေ၊ အင်္ဂလိပ်လိုဖြစ်စေ ထည့်နိုင်ပါတယ်..."></textarea></div>
+<button class="primary" id="summaryBtn" style="margin-top:9px">🧠 Create AI Story Summary & Blueprint<br><span style="font-size:11px">ဇာတ်လမ်းကို ဖတ်ရလွယ်တဲ့ Summary နှင့် Blueprint အဖြစ် အလိုအလျောက် ဖန်တီးရန်</span></button>
+<div id="summaryStatus" class="status"></div>
+</section>
+
+<section class="card">
+<h2>📖 Story Summary <span class="sub">(ဇာတ်လမ်းအကျဉ်းချုပ်)</span></h2>
+<textarea id="summary" placeholder="AI Story Summary ဒီနေရာမှာ ပေါ်လာပါမယ်။ ကိုယ်တိုင်လည်း ပြင်နိုင်ပါတယ်။" style="min-height: 300px;"></textarea>
+<div style="display:none;">
+<button class="copy" id="copySummary">📋 Copy Summary<br><span class="sub">Summary ကို ကူးယူရန်</span></button>
+<button id="blueprintBtn">🧩 Create Story Blueprint<br><span class="sub">ဇာတ်လမ်းဖွဲ့စည်းပုံ ဖန်တီးရန်</span></button>
+</div>
+</section>
+
+<section class="card">
+<h2>🧩 Story Blueprint <span class="sub">(ဇာတ်လမ်းအခြေခံဖွဲ့စည်းပုံ)</span></h2>
+<div id="blueprint" class="out empty">Create Story Blueprint ပြီးနောက် ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
+<div class="notice" style="margin-bottom:8px">💡 <b>Tip:</b> အကွက်တစ်ခုချင်းစီကို နှိပ်၍ အသေးစိတ်အချက်အလက်များကို Pop-up ဖြင့် ကြည့်ရှုနိုင်ပါသည်။</div>
+</section>
+
+<section class="card">
+<h2>👥 Character Studio</h2>
+<div id="charactersContainer"></div>
+<div class="row" style="margin-top: 12px;">
+<button id="autoDetectChars" style="padding: 6px 9px; font-size: 11px;">🤖 Auto Detect Characters<br><span class="sub" style="font-size: 9px;">AI ဖြင့် အလိုအလျောက်ရှာရန်</span></button>
+<button id="addCharBtn" style="padding: 6px 9px; font-size: 11px;">＋ Add Character<br><span class="sub" style="font-size: 9px;">ကိုယ်တိုင်ထည့်ရန်</span></button>
+</div>
+</section>
+
+<section class="card">
+<h2>🖼️ Character Reference Image Prompts <span class="sub">(ဇာတ်ကောင်ရည်ညွှန်းပုံ Prompt များ - English Only)</span></h2>
+<div id="refs" class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။</div>
+</section>
+
+<section class="card">
+<h2>🎞️ Scene Generation <span class="sub">(ဇာတ်ဝင်ခန်းဖန်တီးခြင်း)</span></h2>
+<div class="notice">🎭 <b>Dialogue + Action:</b> Generate Scenes နှိပ်ပြီးနောက် ဇာတ်ဝင်ခန်းတစ်ခန်းချင်းစီရဲ့ <b>Action</b> နှင့် <b>Dialogue</b> ကို ဒီနေရာမှာ ကိုယ်တိုင်ပြင်နိုင်ပါတယ်။</div>
+<button class="primary" id="sceneBtn" style="margin-top:9px">🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span></button>
+<div id="scenes" style="margin-top:9px"></div>
+</section>
+
+<section class="card">
+<h2>🔥 Final AI Video Prompt <span class="sub">(နောက်ဆုံးအသုံးပြုရန် Prompt)</span></h2>
+<button class="primary" id="buildFinalBtn" style="margin-bottom:9px;">⚡ Final AI Video Prompt ထုတ်ရန်<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများမှ ကိုယ်ပြင်ထားသော Action/Dialogue အတိုင်း Final Prompt ဖန်တီးရန်</span></button>
+<div id="finalPrompt" class="out empty">Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
+<div style="display:none;">
+<button class="primary copy" id="copyFinal">📋 Copy Prompt<br><span style="font-size:11px">Prompt တစ်ခုလုံးကို ကူးယူရန်</span></button>
+</div>
+<div class="row">
+<button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
+<button id="continue">➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></button>
+</div>
+<button id="regen" style="width:100%;margin-top:8px;">🔄 Regenerate<br><span class="sub">Version အသစ်</span></button>
+<div id="finalStatus" class="status"></div>
+</section>
+
+<section class="card">
+<h2>🖼️ Thumbnail Prompt</h2>
+<div id="thumbPrompt" class="out empty">Thumbnail Prompt ပေါ်လာပါမယ်။</div>
+<button class="secondary copy" id="copyThumb">📋 Copy Thumbnail Prompt</button>
+<h3>📝 Thumbnail Text စာသား</h3>
+<div id="thumbText" class="out empty">—</div>
+<button class="secondary copy" id="copyThumbText">📋 Copy Thumbnail Text</button>
+</section>
+
+</div>
+
+<div id="modalOverlay" class="modal-overlay hidden">
+<div class="modal-box">
+<div class="modal-header">
+<h3 id="modalTitle">Details</h3>
+<button id="modalClose" class="secondary" style="padding:4px 10px;width:auto;border-radius:8px;">✕</button>
+</div>
+<div id="modalBody" style="margin-top:10px;max-height:65vh;overflow-y:auto;padding-right:4px"></div>
+<div id="modalFooter" style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end;"></div>
+</div>
+</div>
+
+<script>
+(function(){
+
+const opts={
+"Character Consistency":[["AI Generated Character","AI ဖြင့် ဖန်တီးထားသော ဇာတ်ကောင်"],["Real Human","လူသားအစစ်ပုံစံ"],["Myanmar Character","မြန်မာဇာတ်ကောင်"],["Chinese Character","တရုတ်ဇာတ်ကောင်"],["Korean Character","ကိုရီးယားဇာတ်ကောင်"],["Japanese Character","ဂျပန်ဇာတ်ကောင်"],["Custom Character","ကိုယ်တိုင်သတ်မှတ်မည့် ဇာတ်ကောင်"]],
+"Art Style":[["Cinematic Realistic","ရုပ်ရှင်ဆန်သော လက်တွေ့ကျ ပုံစံ"],["Photorealistic","ဓာတ်ပုံကဲ့သို့ လက်တွေ့ကျ"],["Realistic","လက်တွေ့ကျ"],["Anime","အန်နီမေး"],["3D Animation","3D အန်နီမေးရှင်း"],["Chinese Donghua","တရုတ် Donghua ပုံစံ"],["Korean Webtoon","ကိုရီးယား Webtoon ပုံစံ"],["Japanese Anime","ဂျပန် Anime ပုံစံ"],["Comic Book","Comic စာအုပ်ပုံစံ"],["Watercolor","ရေဆေးပန်းချီပုံစံ"],["Oil Painting","ဆီဆေးပန်းချီပုံစံ"],["Fantasy","စိတ်ကူးယဉ်ပုံစံ"],["Dark Fantasy","အမှောင်ဆန်သော စိတ်ကူးယဉ်ပုံစံ"],["Cyberpunk","Cyberpunk ပုံစံ"],["Stick Man","Stick Man ပုံစံ"],["Clay Animation","ရွံ့ရုပ်အန်နီမေးရှင်းပုံစံ"],["Custom Style","ကိုယ်တိုင်သတ်မှတ်မည့် ပုံစံ"]],
+"Genre":[["Action","အက်ရှင်"],["Adventure","စွန့်စားခန်း"],["Comedy","ဟာသ"],["Romance","အချစ်ဇာတ်လမ်း"],["Drama","ဒရာမာ"],["Wuxia","တရုတ်ရှေးဟောင်း ဓားသိုင်း"],["Xianxia","တရုတ်ရှေးဟောင်း မှော်နှင့် နတ်ဘုရားလောက"],["Fantasy","စိတ်ကူးယဉ်"],["Horror","ထိတ်လန့်ဖွယ်"],["Thriller","ရင်ခုန်စိတ်လှုပ်ရှားဖွယ်"],["Mystery","လျှို့ဝှက်ဆန်းကြယ်"],["Sci-Fi","သိပ္ပံစိတ်ကူးယဉ်"],["Historical","သမိုင်းနောက်ခံ"],["Crime","ရာဇဝတ်မှု"],["Martial Arts","ကိုယ်ခံပညာ / ဓားသိုင်း"],["Emotional","စိတ်ခံစားမှုအသားပေး"],["Family","မိသားစုဇာတ်လမ်း"],["Epic","ခမ်းနားကြီးကျယ်သော ဇာတ်လမ်း"],["Documentary","မှတ်တမ်းပုံစံ"],["Custom","ကိုယ်တိုင်သတ်မှတ်မည်"]],
+"Audio Style":[["Character Speaking","ဇာတ်ကောင်ကိုယ်တိုင် ပြောဆိုခြင်း"],["Narration","နောက်ခံဇာတ်ကြောင်းပြောခြင်း"],["Character Speaking + Sound Effects","ဇာတ်ကောင်ပြောဆိုခြင်း + အသံအကျိုးသက်ရောက်မှု"],["Narration + Sound Effects","ဇာတ်ကြောင်းပြောခြင်း + အသံအကျိုးသက်ရောက်မှု"],["Dialogue + Background Music","စကားပြော + နောက်ခံတေးဂီတ"],["Full Cinematic Audio","ရုပ်ရှင်ဆန်သော အသံအပြည့်အစုံ"],["Silent","အသံမပါ"],["Custom Audio","ကိုယ်တိုင်သတ်မှတ်မည်"]],
+"Language":[["English","အင်္ဂလိပ်"],["Myanmar","မြန်မာ"],["Chinese","တရုတ်"],["Korean","ကိုရီးယား"],["Japanese","ဂျပန်"],["Thai","ထိုင်း"],["Vietnamese","ဗီယက်နမ်"],["No Dialogue","စကားပြောမပါ"]],
+"Setting Culture":[["Myanmar","မြန်မာ"],["China","တရုတ်"],["Ancient China","ရှေးဟောင်းတရုတ်"],["Korea","ကိုရီးယား"],["Japan","ဂျပန်"],["Thailand","ထိုင်း"],["India","အိန္ဒိယ"],["Europe","ဥရောပ"],["America","အမေရိက"],["Ancient Japan","ရှေးဟောင်းဂျပန်"],["Ancient Korea","ရှေးဟောင်းကိုရီးယား"],["Fantasy World","စိတ်ကူးယဉ်ကမ္ဘာ"],["Modern World","ခေတ်သစ်ကမ္ဘာ"],["Custom","ကိုယ်တိုင်သတ်မှတ်မည်"]],
+"Naming Style":[["Modern Myanmar","ခေတ်သစ် မြန်မာအမည်"],["Traditional Myanmar","ရိုးရာ မြန်မာအမည်"],["Modern Chinese","ခေတ်သစ် တရုတ်အမည်"],["Ancient Chinese","ရှေးဟောင်း တရုတ်အမည်"],["Korean","ကိုရီးယားအမည်"],["Japanese","ဂျပန်အမည်"],["English","အင်္ဂလိပ်အမည်"],["Fantasy","စိတ်ကူးယဉ်အမည်"],["Random","AI မှ သင့်တော်သလိုရွေးမည်"],["No Character Names","ဇာတ်ကောင်အမည်မထည့်ပါ"]],
+"Duration":[["5 Seconds","၅ စက္ကန့်"],["10 Seconds","၁၀ စက္ကန့်"],["15 Seconds","၁၅ စက္ကန့်"],["30 Seconds","စက္ကန့် ၃၀"],["1 Minute","၁ မိနစ်"],["2 Minutes","၂ မိနစ်"],["3 Minutes","၃ မိနစ်"],["5 Minutes","၅ မိနစ်"],["Unlimited","အကန့်အသတ်မရှိ"]],
+"Aspect Ratio":[["9:16 Vertical","9:16 ဒေါင်လိုက် - TikTok / Shorts"],["16:9 Landscape","16:9 အလျားလိုက် - YouTube"]],
+"Camera Style":[["Cinematic","ရုပ်ရှင်ဆန်သော"],["First Person POV","ကိုယ်တိုင်မြင်ကွင်း POV"],["Third Person","တတိယလူမြင်ကွင်း"],["Close-up","အနီးကပ်"],["Medium Shot","အလယ်အလတ်အကွာ"],["Wide Shot","အကျယ်မြင်ကွင်း"],["Over-the-Shoulder","ပခုံးပေါ်မှ မြင်ကွင်း"],["Tracking Shot","ဇာတ်ကောင်နောက်လိုက်ရိုက်ကူးခြင်း"],["Drone Shot","Drone အပေါ်မှ ရိုက်ကူးခြင်း"],["Handheld","လက်ကိုင်ကင်မရာပုံစံ"],["Dynamic Action Camera","လှုပ်ရှားမှုမြန်သော Action Camera"],["Custom","ကိုယ်တိုင်သတ်မှတ်မည်"]],
+"Camera Movement":[["Static","မလှုပ်ရှား"],["Slow Pan","ဖြည်းဖြည်း ဘေးတိုက်ရွှေ့"],["Tilt","အပေါ်အောက် လှည့်"],["Zoom In","အနီးသို့ Zoom"],["Zoom Out","အဝေးသို့ Zoom"],["Dolly In","ရှေ့သို့ ချောမွေ့စွာရွေ့"],["Dolly Out","နောက်သို့ ချောမွေ့စွာရွေ့"],["Tracking","ဇာတ်ကောင်နောက် လိုက်ရွေ့"],["Orbit","ဇာတ်ကောင်ပတ်လည် လှည့်ရိုက်"],["Crane","အပေါ်အောက် မြင့်နိမ့် ရိုက်ကူး"],["Handheld Shake","လက်ကိုင်ကင်မရာ လှုပ်ခါမှု"],["Fast Action Movement","မြန်ဆန်သော Action လှုပ်ရှားမှု"],["Smooth Cinematic Movement","ချောမွေ့သော ရုပ်ရှင်ဆန်သည့် လှုပ်ရှားမှု"],["Custom","ကိုယ်တိုင်သတ်မှတ်မည်"]],
+"Lighting":[["Natural Daylight","သဘာဝနေ့အလင်း"],["Golden Hour","ရွှေရောင်နေဝင်ချိန်အလင်း"],["Sunrise","နေထွက်ချိန်"],["Sunset","နေဝင်ချိန်"],["Night","ညအလင်း"],["Moonlight","လရောင်"],["Neon","Neon အလင်း"],["Dramatic Lighting","Dramatic အလင်း"],["Dark Cinematic","မှောင်မိုက်သော ရုပ်ရှင်ဆန်သည့်အလင်း"],["Volumetric Light","အလင်းတန်းများပါသော အလင်း"],["Firelight","မီးရောင်"],["Studio Lighting","Studio အလင်း"],["Custom","ကိုယ်တိုင်သတ်မှတ်မည်"]],
+"Video Quality":[["Standard","ပုံမှန်"],["HD","HD"],["Full HD","Full HD"],["4K","4K"],["Ultra Cinematic","အလွန်အရည်အသွေးမြင့် ရုပ်ရှင်ဆန်သော"],["Photorealistic","ဓာတ်ပုံကဲ့သို့ လက်တွေ့ကျ"]],
+"Scene Mode":[["Single Shot","ဇာတ်ဝင်ခန်းတစ်ခန်း"],["Multiple Shots","ဇာတ်ဝင်ခန်းများစွာ"],["Full Story","ဇာတ်လမ်းအပြည့်"],["Storyboard","Storyboard ပုံစံ"]],
+"Target AI Video Model":[["Flow","Google Flow"],["Veo","Google Veo"],["Kling","Kling"],["Hailuo","Hailuo"],["Runway","Runway"],["Luma","Luma"],["Pika","Pika"],["Dola","Dola AI"],["YouTube AI","YouTube AI"],["Generic","မည်သည့် AI Video Generator မဆို"]],
+"Prompt Output Language":[["English","အင်္ဂလိပ်"]]
+};
+
+const defaults={
+"Character Consistency":"AI Generated Character",
+"Art Style":"Cinematic Realistic",
+"Genre":"Drama",
+"Audio Style":"Character Speaking",
+"Language":"English",
+"Setting Culture":"Myanmar",
+"Naming Style":"Modern Myanmar",
+"Duration":"1 Minute",
+"Aspect Ratio":"9:16 Vertical",
+"Camera Style":"Cinematic",
+"Camera Movement":"Smooth Cinematic Movement",
+"Lighting":"Dramatic Lighting",
+"Video Quality":"4K",
+"Scene Mode":"Multiple Shots",
+"Target AI Video Model":"Flow",
+"Prompt Output Language":"English"
+};
+
+let labels={
+"Character Consistency":"ဇာတ်ကောင် တည်ငြိမ်မှုပုံစံ",
+"Art Style":"အနုပညာ ပုံစံ",
+"Genre":"ဇာတ်လမ်း အမျိုးအစား",
+"Audio Style":"အသံ ပုံစံ",
+"Language":"ဘာသာစကား",
+"Setting Culture":"နောက်ခံ ယဉ်ကျေးမှု",
+"Naming Style":"အမည်ပေးစနစ်",
+"Duration":"ကြာချိန်",
+"Aspect Ratio":"ဗီဒီယို အချိုး",
+"Camera Style":"ကင်မရာ ပုံစံ",
+"Camera Movement":"ကင်မရာ လှုပ်ရှားမှု",
+"Lighting":"အလင်းအမှောင် ပုံစံ",
+"Video Quality":"ဗီဒီယို အရည်အသွေး",
+"Scene Mode":"ဇာတ်ဝင်ခန်း ပုံစံ",
+"Target AI Video Model":"အသုံးပြုမည့် AI Video Model",
+"Prompt Output Language":"Prompt ထွက်မည့် ဘာသာစကား"
+};
+
+let state={
+part:1,
+characters:[],
+scenes:[],
+summary:"",
+blueprint:null,
+lastFinal:"",
+negative:"",
+thumb:"",
+thumbText:"",
+thumbNeg:"",
+history:{}
+};
+
+function esc(v){
+return String(v||"").replace(/[&<>"']/g,m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[m]))
+}
+
+function cloneData(v){return v==null?v:JSON.parse(JSON.stringify(v))}
+
+function copyText(t,btn){
+navigator.clipboard?.writeText(String(t||"")).then(()=>{
+let old=btn.innerText;
+btn.innerText="✅ Copied / ကူးပြီးပါပြီ";
+setTimeout(()=>btn.innerText=old,1200)
+}).catch(()=>{
+alert("Clipboard permission မရပါ။ Prompt ကို long-press လုပ်ပြီး copy လုပ်ပါ။")
+})
+}
+
+function openModal(title,bodyHtml,footerHtml){
+document.getElementById("modalTitle").textContent=title;
+document.getElementById("modalBody").innerHTML=bodyHtml;
+let f=document.getElementById("modalFooter");
+if(footerHtml){
+f.innerHTML=footerHtml;
+f.style.display="flex"
+}else{
+f.innerHTML="";
+f.style.display="none"
+}
+document.getElementById("modalOverlay").classList.remove("hidden")
+}
+
+function closeModal(){
+document.getElementById("modalOverlay").classList.add("hidden")
+}
+
+document.getElementById("modalClose").onclick=closeModal;
+
+document.getElementById("modalOverlay").onclick=e=>{
+if(e.target===document.getElementById("modalOverlay"))closeModal()
+};
+
+function addDual(parent,key,list,def){
+let id="s_"+key.replaceAll(" ","_"),
+d=document.createElement("div");
+
+d.className="field";
+
+d.innerHTML=`
+<label>${key}<span>${labels[key]||"ရွေးချယ်ရန်"}</span></label>
+<div class="dual">
+<button type="button">
+<span class="en"></span>
+<span class="mm"></span>
+</button>
+<div class="menu hidden"></div>
+<select id="${id}" style="display:none"></select>
+</div>`;
+
+let s=d.querySelector("select"),
+tr=d.querySelector(".dual>button"),
+menu=d.querySelector(".menu");
+
+list.forEach(([v,m])=>{
+let o=document.createElement("option");
+o.value=v;
+o.textContent=v;
+s.appendChild(o);
+
+let b=document.createElement("button");
+b.type="button";
+b.innerHTML=`<span class="en">${v}</span><span class="mm">${m}</span>`;
+
+b.onclick=()=>{
+s.value=v;
+upd();
+menu.classList.add("hidden")
+};
+
+menu.appendChild(b)
+});
+
+function upd(){
+let o=s.options[s.selectedIndex];
+tr.querySelector(".en").textContent=o?.value||"";
+tr.querySelector(".mm").textContent=list.find(x=>x[0]===s.value)?.[1]||"";
+
+menu.querySelectorAll("button").forEach(b=>{
+b.classList.toggle("active",b.innerText.startsWith(s.value))
+})
+}
+
+s.value=def;
+upd();
+s.onchange=upd;
+
+tr.onclick=()=>{
+menu.classList.toggle("hidden")
+};
+
+document.addEventListener("click",e=>{
+if(!d.contains(e.target))menu.classList.add("hidden")
+});
+
+parent.appendChild(d)
+}
+
+Object.entries(opts).forEach(([k,v])=>{
+addDual(document.getElementById("settings"),k,v,defaults[k])
+});
+
+function val(k){
+let el=document.getElementById("s_"+k.replaceAll(" ","_"));
+return el?el.value:(defaults[k]||"")
+}
+
+function durationSec(){
+return({
+"5 Seconds":5,
+"10 Seconds":10,
+"15 Seconds":15,
+"30 Seconds":30,
+"1 Minute":60,
+"2 Minutes":120,
+"3 Minutes":180,
+"5 Minutes":300,
+"Unlimited":60
+})[val("Duration")]||60
+}
+
+function settingsObj(){
+let x={};
+Object.keys(opts).forEach(k=>x[k]=val(k));
+return x
+}
+
+function localCharacterParser(text){
+let found=[],
+seen=new Set(),
+patterns=[/\b([A-Z][A-Za-z]{2,20}(?:\s+[A-Z][A-Za-z]{2,20})?)\b/g];
+
+for(const re of patterns){
+let m;
+while((m=re.exec(text||""))){
+let n=m[1].trim().replace(/[,\:：]+$/,"");
+if(n.length>=2 && !seen.has(n) && !["Story Summary","Story Blueprint","Main Character","Scene","Part"].includes(n)){
+seen.add(n);
+found.push(n)
+}
+}
+}
+if(!found.length){found=["Main Character"];}
+return found.slice(0,12).map((name,i)=>({
+name,
+role:i===0?"Main Character":"Supporting Character",
+age:"",
+description:"Detected from the story. Refine details here.",
+locked:true
+}))
+}
+
+function renderChars(){
+const b=document.getElementById("charactersContainer");
+if(!b)return;
+
+if(!state.characters.length){
+b.innerHTML='<div class="empty" style="margin-top:10px">Character မရှိသေးပါ။ Auto Detect သို့မဟုတ် Add Character ကိုနှိပ်ပါ။</div>';
+renderRefs();
+return
+}
+
+b.innerHTML=`
+<div class="char-grid">
+${state.characters.map((c,i)=>
+`<div class="char-card" data-ci="${i}">
+<div style="display:flex;justify-content:space-between;width:100%">
+<span style="font-size:8px;color:var(--b)">#${i+1}</span>
+<span style="font-size:8px">${c.locked?"🔒":"🔓"}</span>
+</div>
+<div>
+<div class="char-card-title">${esc(c.name||"Char "+(i+1))}</div>
+<div class="char-card-sub">${esc(c.role||"Role")}</div>
+</div>
+<div style="font-size:8px;color:var(--muted)">Tap</div>
+</div>`
+).join("")}
+</div>`;
+
+b.querySelectorAll(".char-card").forEach(card=>{
+card.onclick=()=>openCharacterModal(+card.dataset.ci)
+});
+
+renderRefs()
+}
+
+function openCharacterModal(i){
+let c=state.characters[i];
+let bodyHtml=`
+<div class="field"><label>Name <span>အမည် (English Only)</span></label><input id="m_name" value="${esc(c.name)}"></div>
+<div class="field" style="margin-top:8px"><label>Role <span>အခန်းကဏ္ဍ</span></label><input id="m_role" value="${esc(c.role)}"></div>
+<div class="field" style="margin-top:8px"><label>Age <span>အသက်</span></label><input id="m_age" value="${esc(c.age)}"></div>
+<div class="field" style="margin-top:8px"><label>Description <span>ဇာတ်ကောင်ဖော်ပြချက် (English Recommended)</span></label><textarea id="m_desc" style="min-height:90px">${esc(c.description)}</textarea></div>
+<div class="lock"><input type="checkbox" id="m_lock" ${c.locked?"checked":""}> 🔒 Lock Character <span class="sub">(ဇာတ်ကောင်တည်ငြိမ်မှု)</span></div>`;
+
+openModal(`Character #${i+1}: ${esc(c.name||"Unnamed")}`, bodyHtml, `<button class="danger" id="m_del" style="margin-right:auto;">🗑 Delete</button><button class="primary" id="m_save" style="width:auto;padding:9px 18px;">💾 Save</button>`);
+
+document.getElementById("m_save").onclick=()=>{
+state.characters[i].name=document.getElementById("m_name").value.replace(/[^\x00-\x7F]/g,"").trim()||"Character";
+state.characters[i].role=document.getElementById("m_role").value;
+state.characters[i].age=document.getElementById("m_age").value;
+state.characters[i].description=document.getElementById("m_desc").value;
+state.characters[i].locked=document.getElementById("m_lock").checked;
+closeModal();
+renderChars();
+state.lastFinal="";
+renderFinalPrompts();
+};
+
+document.getElementById("m_del").onclick=()=>{
+if(confirm("ဒီဇာတ်ကောင်ကို ဖျက်မှာ သေချာပါသလား?")){
+state.characters.splice(i,1);
+closeModal();
+renderChars();
+state.lastFinal="";
+renderFinalPrompts();
+}
+}
+}
+
+function stylePhrase(){
+let s=val("Art Style");
+return({
+"Cinematic Realistic":"cinematic realistic live-action",
+"Photorealistic":"photorealistic live-action",
+"Realistic":"realistic live-action",
+"Anime":"cinematic anime",
+"3D Animation":"high-end cinematic 3D animation",
+"Chinese Donghua":"cinematic Chinese donghua",
+"Korean Webtoon":"cinematic Korean webtoon",
+"Japanese Anime":"cinematic Japanese anime"
+})[s]||s
+}
+
+function refPrompt(c){
+const englishOnly=v=>String(v||"").replace(/[^\x00-\x7F]/g," ").replace(/\s+/g," ").trim();
+const name=englishOnly(c.name)||"Main Character";
+const age=englishOnly(c.age)||"age appropriate";
+const role=englishOnly(c.role)||"story character";
+const description=englishOnly(c.description)||"distinctive, recognizable appearance";
+const genre=englishOnly(val("Genre"))||"Drama";
+const culture=englishOnly(val("Setting Culture"))||"Modern World";
+const style=englishOnly(stylePhrase())||"cinematic realistic live-action";
+
+return `Full character design sheet, ${age} ${name}, ${role}, ${description}, ${style} character art, ${genre} genre, ${culture} cultural setting. Maintain a highly detailed, consistent, recognizable character identity and realistic proportions appropriate to the selected art style. Include full-body front view, left 3/4 view, right 3/4 view, left side profile, right side profile, full-body back view, close-up face shots, costume and accessory detail insets, and important item/prop detail insets. Show all views as ONE professional production-ready character reference/model sheet with clearly separated views. Keep the EXACT SAME character in every view: identical face structure, eyes, eyebrows, nose, lips, jawline, skin appearance, age, hairstyle, hairline, hair color, body proportions, physique, clothing, costume colors, accessories, footwear, weapons and signature props. Preserve the same appearance across every angle without redesigning or reinterpreting the character. Consistent lighting, clean neutral background, clear silhouette, highly detailed textures, professional character design presentation. IDENTITY LOCK: exact character identity must remain unchanged across all views and future scenes, no identity drift, no age drift, no facial-feature changes, no hairstyle drift, no costume drift, no accessory drift, no body-proportion drift, no random variations. NO WATERMARK, NO LOGO, NO BRANDING, NO SIGNATURE, NO COPYRIGHT TEXT, NO EXTRA TEXT, NO RANDOM LETTERS, NO LABELS, NO CAPTIONS, NO TYPOGRAPHY anywhere in the image. --ar 1:1 --style raw;`
+}
+
+function renderRefs(){
+const b=document.getElementById("refs");
+if(!b)return;
+if(!state.characters.length){
+b.innerHTML='<span class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။';
+return
+}
+b.innerHTML=state.characters.map((c,i)=>
+`<div class="item">
+<b>${esc(c.name||"Character "+(i+1))}</b>
+<textarea id="ref_${i}" readonly style="margin-top:7px;min-height:300px">${esc(refPrompt(c))}</textarea>
+<button class="secondary copy" data-copyref="${i}">📋 Copy Prompt</button>
+</div>`
+).join("");
+
+b.querySelectorAll("[data-copyref]").forEach(e=>{
+e.onclick=()=>copyText(document.getElementById("ref_"+e.dataset.copyref).value,e)
+})
+}
+
+function fallbackBlueprint(summary){
+return{
+story_premise:summary,
+main_characters:state.characters.map(c=>c.name).join(", ")||"Main Character",
+supporting_characters:"Supporting Characters",
+setting_world:val("Setting Culture"),
+main_conflict:"Main conflict developed from story",
+story_goal:"Story goal and resolution",
+story_direction:"Beginning → escalation → turning point → resolution",
+tone_emotion:val("Genre"),
+important_details:"Preserve story-specific details",
+continuity_anchors:"Character identity, clothing, props, location, time and unresolved events must remain consistent."
+}
+}
+
+function renderBlueprint(bp){
+state.blueprint=bp;
+let entries=[
+["Story Premise","ဇာတ်အစ",bp.story_premise],
+["Main Characters","ဇာတ်ကောင်",bp.main_characters],
+["Supporting Characters","အထောက်အကူ",bp.supporting_characters],
+["Setting & World","ကမ္ဘာ",bp.setting_world],
+["Main Conflict","ပြဿနာ",bp.main_conflict],
+["Story Goal","ပန်းတိုင်",bp.story_goal],
+["Story Direction","လမ်းကြောင်း",bp.story_direction],
+["Tone & Emotion","ခံစားချက်",bp.tone_emotion],
+["Important Details","အချက်အလက်",bp.important_details],
+["Continuity Anchors","ဆက်စပ်ချက်",bp.continuity_anchors]
+];
+let c=document.getElementById("blueprint");
+c.innerHTML=`
+<div class="bp-grid">
+${entries.map((x,i)=>
+`<div class="bp-card" data-bpidx="${i}">
+<div class="bp-card-header"><span class="bp-card-title">${x[0]}</span><span class="bp-card-sub">#${i+1}</span></div>
+<div class="bp-card-text" title="${esc(Array.isArray(x[2])?x[2].join(", "):x[2])}">${esc(Array.isArray(x[2])?x[2].join(", "):x[2])}</div>
+</div>`
+).join("")}
+</div>`;
+c.classList.remove("empty");
+c.querySelectorAll(".bp-card").forEach(card=>{
+card.onclick=()=>{
+let item=entries[+card.dataset.bpidx];
+openModal(item[0]+" ("+item[1]+")", `<div style="font-size:13px;line-height:1.6;color:#e2e8f0;">${esc(Array.isArray(item[2])?item[2].join(", "):item[2])}</div>`, null)
+}
+})
+}
+
+function plan(total){
+let remain=total,out=[],i=0;
+while(remain>0){
+let d=Math.min(10,remain);
+if(remain>10){
+let choices=[6,7,5,8,9,4];
+d=Math.min(choices[i%choices.length],remain-10);
+if(d<=0)d=Math.min(10,remain);
+}
+out.push(d);
+remain-=d;
+i++;
+}
+return out
+}
+function estDuration(action, dialogue) {
+  let actLen = (action || "").replace(/\s+/g, "").length;
+  let diaLen = (dialogue || "").replace(/\s+/g, "").length;
+  // Dialogue ၁ စက္ကန့်လျှင် ၁၀ စာလုံး၊ Action ၁ စက္ကန့်လျှင် ၂၀ စာလုံးနှုန်းဖြင့် တွက်ချက်ခြင်း
+  let sec = Math.round((diaLen / 10) + (actLen / 20));
+  return Math.max(sec, 2);
+}
+
+function renderScenes(){
+const b=document.getElementById("scenes");
+if(!b)return;
+
+if(!state.scenes.length){
+b.innerHTML='<span class="empty">Generate Scenes ပြီးနောက် Action နှင့် Dialogue တွေ ပေါ်လာပါမယ်။';
+return;
+}
+
+b.innerHTML=state.scenes.map((s,i)=>{
+let est = estDuration(s.action_my || s.action, s.dialogue);
+let warnStyle = est > 10 ? "background:#fb7185;color:#fff;" : "";
+let warnText = est > 10 ? " ⚠️ (10s ထက် ကျော်နေပါသည်)" : "";
+
+return `<div class="item">
+<div class="itemhead">
+  <b>SCENE ${String(i+1).padStart(2,"0")}</b>
+  <div>
+    <span class="pill" id="est_${i}" style="${warnStyle}">⏱️ ခန့်မှန်း: ~${est}s${warnText}</span>
+    <span class="pill">${s.duration}s Max</span>
+  </div>
+</div>
+<div class="field" style="margin-top:8px">
+<label>Action <span>ဇာတ်ဝင်ခန်း လှုပ်ရှားမှု</span></label>
+<textarea data-si="${i}" data-sk="action_my" style="min-height:110px">${esc(s.action_my||s.action||"")}</textarea>
+</div>
+<div class="field" style="margin-top:8px">
+<label>Dialogue <span>စကားပြောစာသား</span></label>
+<textarea data-si="${i}" data-sk="dialogue" style="min-height:85px">${esc(s.dialogue||"")}</textarea>
+</div>
+<button class="danger copy" data-delete-scene="${i}" style="margin-top:8px">🗑️ Delete Scene ${String(i+1).padStart(2,"0")}</button>
+</div>`
+}).join("");
+
+b.querySelectorAll("[data-si]").forEach(e=>{
+e.oninput=()=>{
+const i=+e.dataset.si;
+const key=e.dataset.sk;
+if(state.scenes[i]){
+state.scenes[i][key]=e.value;
+state.lastFinal="";
+
+// Real-time Duration update
+let est = estDuration(state.scenes[i].action_my || state.scenes[i].action, state.scenes[i].dialogue);
+let estEl = document.getElementById("est_" + i);
+if(estEl){
+  if(est > 10){
+    estEl.style.cssText = "background:#fb7185;color:#fff;";
+    estEl.textContent = `⏱️ ခန့်မှန်း: ~${est}s ⚠️ (10s ထက် ကျော်နေပါသည်)`;
+  } else {
+    estEl.style.cssText = "";
+    estEl.textContent = `⏱️ ခန့်မှန်း: ~${est}s`;
+  }
+}
+}
+}
+});
+
+b.querySelectorAll("[data-delete-scene]").forEach(e=>{
+e.onclick=()=>{
+let i=+e.dataset.deleteScene;
+if(!confirm(`SCENE ${String(i+1).padStart(2,"0")} ကို ဖျက်မှာ သေချာပါသလား?`))return;
+state.scenes.splice(i,1);
+state.lastFinal="";
+renderScenes();
+renderFinalPrompts();
+}
+})
+}
+
+function syncSceneEdits(){
+document.querySelectorAll("#scenes [data-si]").forEach(e=>{
+const i=+e.dataset.si;
+const key=e.dataset.sk;
+if(state.scenes[i]){
+state.scenes[i][key]=e.value;
+}
+});
+}
+
+function scenePrompt(s, i){
+let chars = s.character || state.characters.map(c=>c.name).filter(Boolean).join(", ") || "Main Character";
+let actionText = s.action || s.action_my || "Cinematic action sequence";
+let dialogueText = s.dialogue ? `\nDialogue: ${s.dialogue}` : "";
+
+return `SCENE ${String(i+1).padStart(2,"0")} — ${s.duration} seconds
+Character: ${chars}
+Action: ${actionText}${dialogueText}
+Camera: ${s.camera || val("Camera Style")} | Movement: ${s.camera_movement || val("Camera Movement")} | Lighting: ${s.lighting || val("Lighting")}
+Audio: ${s.audio || val("Audio Style")}. Audio is background sound only; no musical instrument is visible.
+Transition: ${s.transition || "Smooth continuity-preserving transition."}
+Visual Style: ${stylePhrase()}, ${val("Genre")}, ${val("Setting Culture")}, ${val("Aspect Ratio")}, ${val("Video Quality")}`;
+}
+
+
+function renderFinalPrompts(){
+const b=document.getElementById("finalPrompt");
+if(!b)return;
+
+if(!state.scenes.length || !state.lastFinal){
+b.classList.add("empty");
+b.textContent="Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။";
+return
+}
+
+b.classList.remove("empty");
+const finalText=state.lastFinal||"";
+
+b.innerHTML=state.scenes.map((s,i)=>{
+const sceneNo=i+1;
+const p=scenePrompt(s, i);
+
+return `<div class="final-scene">
+<div class="itemhead"><b>SCENE ${String(sceneNo).padStart(2,"0")} PROMPT</b><span class="pill">${s.duration}s</span></div>
+<div class="out">${esc(p)}</div>
+<button class="secondary copy" data-copyscene="${i}">📋 Copy Scene ${String(sceneNo).padStart(2,"0")} Prompt</button>
+</div>`
+}).join("");
+
+b.querySelectorAll("[data-copyscene]").forEach(e=>{
+e.onclick=()=>{
+let i=+e.dataset.copyscene;
+let p=scenePrompt(state.scenes[i], i);
+copyText(p.trim(), e)
+}
+})
+}
+
+async function buildFinalFromScenes(){
+if(!state.scenes.length){
+state.lastFinal="";
+renderFinalPrompts();
+return;
+}
+syncSceneEdits();
+
+const statusEl = document.getElementById("finalStatus");
+if(statusEl) statusEl.textContent = "⏳ ပြင်ဆင်ထားသော မြန်မာ စာသားများကို English AI Video Prompt အဖြစ် ပြောင်းလဲနေပါသည်...";
+
+try {
+let d = await callGemini("Translate and refine the user's edited Myanmar action descriptions (action_my) into detailed, high-quality visual English actions (action) for AI video generation (Kling, Veo, Flow). Keep character names in English.");
+
+if(Array.isArray(d.scenes)){
+d.scenes.forEach((sc, i) => {
+if(state.scenes[i] && sc.action){
+state.scenes[i].action = sc.action;
+}
+});
+}
+} catch(e) {
+console.warn("AI translation skipped, using raw scene prompts:", e);
+}
+
+const title=document.getElementById("title").value.trim()||"Untitled";
+const scenesText=state.scenes.map((s,i)=>scenePrompt(s,i)).join("\n\n");
+const cleanNeg=state.negative||"low quality, blurry, distorted face, deformed hands, extra fingers, duplicate characters, identity drift, costume drift, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
+
+state.lastFinal=`Create a generator-ready ${stylePhrase()} ${val("Genre")} video for ${val("Target AI Video Model")}. Story title: ${title}. Aspect ratio: ${val("Aspect Ratio")}. Master continuity: Preserve every locked character exactly. Never change face, age, hairstyle, hair color, skin appearance, body shape, costume, armor, accessories, weapons or signature props. Preserve established location, time, relationships and unresolved story events.
+
+${scenesText}
+
+Negative Prompt: ${cleanNeg}`;
+
+renderFinalPrompts();
+if(statusEl) statusEl.textContent = "✓ Final AI Video Prompt အောင်မြင်စွာ ထုတ်ပြီးပါပြီ။";
+}
+
+function totalScene(){
+return state.scenes.reduce((a,s)=>a+(+s.duration||0),0)
+}
+
+async function callGemini(instruction){
+let key=(document.getElementById("apiKey").value||localStorage.getItem("gemini_api_key")||"").replace(/[\u200B-\u200D\uFEFF]/g,"").trim();
+if(!key)throw Error("Gemini API key မထည့်ရသေးပါ။");
+
+let model=document.getElementById("model").value;
+let system=`You are AI Video Prompt Master V4.3. Return strictly valid JSON with no markdown wrapping or conversational text.
+
+For story_summary:
+write a natural, human-readable Burmese story synopsis/draft.
+
+For story_blueprint use keys:
+story_premise, main_characters, supporting_characters, setting_world, main_conflict, story_goal, story_direction, tone_emotion, important_details, continuity_anchors.
+
+For characters return an array of objects with name, role, age, description.
+Character names MUST be strictly in English romanized letters.
+
+For scenes return an array of objects with:
+scene_number, duration_seconds, character, action, action_my, dialogue, camera, camera_movement, lighting, audio, transition.
+
+CRITICAL SCENE RULES:
+1. Total duration of all scenes must equal the requested duration exactly.
+2. Every scene duration must be <= 10 seconds.
+3. action_my MUST be natural Burmese.
+4. dialogue MUST be natural Burmese.
+
+Return also: negative_prompt, thumbnail_prompt, thumbnail_text, thumbnail_negative_prompt.`;
+
+let user=`Selected settings: ${JSON.stringify(settingsObj(),null,2)}
+Story title: ${document.getElementById("title").value.trim()}
+Story input: ${document.getElementById("story").value.trim()}
+Current summary: ${document.getElementById("summary").value.trim()}
+Current blueprint: ${JSON.stringify(state.blueprint||{},null,2)}
+Current characters: ${JSON.stringify(state.characters,null,2)}
+Current scenes: ${JSON.stringify(state.scenes,null,2)}
+Part: ${state.part}
+Instruction: ${instruction}`;
+
+let r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{
+method:"POST",
+headers:{"Content-Type":"application/json","x-goog-api-key":key},
+body:JSON.stringify({contents:[{parts:[{text:system+"\n\n"+user}]}],generationConfig:{responseMimeType:"application/json"}})
+});
+
+if(!r.ok){throw Error("Gemini API "+r.status+" — "+(await r.text()).slice(0,500));}
+let d=await r.json();
+let t=d.candidates?.[0]?.content?.parts?.[0]?.text||"";
+if(!t)throw Error("Gemini response မရပါ။");
+
+t=t.replace(/```json/gi,"").replace(/```/g,"").trim();
+let jsonStart=t.indexOf("{"),jsonEnd=t.lastIndexOf("}");
+if(jsonStart!==-1 && jsonEnd!==-1 && jsonEnd>jsonStart){t=t.substring(jsonStart,jsonEnd+1);}
+
+try{return JSON.parse(t);}catch(e){throw Error("Gemini က valid JSON မပေးပါ။");}
+}
+
+async function makeSummary(){
+let title=document.getElementById("title").value.trim(),story=document.getElementById("story").value.trim();
+if(!title&&!story)return alert("ကျေးဇူးပြု၍ Story Title (သို့မဟုတ်) အကြောင်းအရာ တစ်ခုခု ထည့်ပါ။");
+
+document.getElementById("summaryStatus").textContent="⏳ Story Summary & Blueprint ဖန်တီးနေပါတယ်...";
+try{
+let instruction=title&&!story?`Create the natural story_summary and story_blueprint. Expand the title "${title}".`:`Create the natural story_summary and story_blueprint.`;
+let d=await callGemini(instruction);
+state.summary=d.story_summary||"";
+document.getElementById("summary").value=state.summary;
+if(d.story_blueprint){renderBlueprint(d.story_blueprint);}else{renderBlueprint(fallbackBlueprint(state.summary));}
+if(Array.isArray(d.characters)&&d.characters.length){
+state.characters=d.characters.map(c=>({...c,name:String(c.name||"Main Character").replace(/[^\x00-\x7F]/g,"").trim()||"Main Character",locked:true}));
+renderChars();
+}else{
+state.characters=localCharacterParser(state.summary||story);
+renderChars();
+}
+document.getElementById("summaryStatus").textContent="✓ Story Summary & Blueprint successfully created."
+}catch(e){
+state.summary=story||title;
+document.getElementById("summary").value=state.summary;
+renderBlueprint(fallbackBlueprint(state.summary));
+state.characters=localCharacterParser(state.summary||story);
+renderChars();
+document.getElementById("summaryStatus").textContent="⚠️ AI Summary/Blueprint failed, fallback used. "+e.message;
+}
+}
+
+function makeBlueprint(){
+let text=(document.getElementById("summary").value||document.getElementById("story").value||"").trim();
+if(!text)return alert("Story Input / Summary အရင်ထည့်ပါ။");
+renderBlueprint(state.blueprint||fallbackBlueprint(text));
+}
+
+async function autoDetect(){
+let text=(document.getElementById("summary").value||document.getElementById("story").value||"").trim();
+if(!text)return alert("Story Summary / Story Input အရင်ထည့်ပါ။");
+
+try{
+let d=await callGemini("Detect ALL meaningful named characters in the story. Character names MUST be strictly in English.");
+if(Array.isArray(d.characters)&&d.characters.length){
+state.characters=d.characters.map(c=>({name:String(c.name||"Main Character").replace(/[^\x00-\x7F]/g,"").trim()||"Main Character",role:c.role||"Supporting Character",age:c.age||"",description:c.description||"",locked:true}));
+}else{state.characters=localCharacterParser(text);}
+}catch(e){state.characters=localCharacterParser(text);}
+renderChars();
+}
+
+function normalizeScenes(arr){
+return arr.map((s,i)=>{
+let actionMy=String(s.action_my||s.action||`ဇာတ်ဝင်ခန်း ${i+1} လှုပ်ရှားမှု။`).trim();
+return{
+duration:Math.min(10,Math.max(1,+s.duration_seconds||5)),
+character:String(s.character||state.characters.map(c=>c.name).filter(Boolean).join(", ")||"Main Character").replace(/[^\x00-\x7F]/g,"").trim(),
+action:String(s.action||"").trim(),
+action_my:actionMy,
+dialogue:String(s.dialogue||"").trim(),
+camera:s.camera||val("Camera Style"),
+camera_movement:s.camera_movement||val("Camera Movement"),
+lighting:s.lighting||val("Lighting"),
+audio:s.audio||val("Audio Style"),
+transition:s.transition||"Smooth continuity-preserving transition."
+}
+})
+}
+
+function generateScenesLocal(){
+let total=durationSec(),durations=plan(total),charName=state.characters[0]?.name||"Main Character";
+state.scenes=durations.map((d,i)=>({
+duration:d,
+character:charName,
+action:"",
+action_my:`ဇာတ်ဝင်ခန်း ${i+1} ၏ လှုပ်ရှားမှုအကြောင်းအရာ။`,
+dialogue:val("Language")==="No Dialogue"?"":`ဇာတ်ဝင်ခန်း ${i+1} စကားပြော။`,
+camera:val("Camera Style"),
+camera_movement:val("Camera Movement"),
+lighting:val("Lighting"),
+audio:val("Audio Style"),
+transition:"Smooth continuity-preserving transition."
+}));
+state.lastFinal="";
+state.negative="low quality, blurry, distorted face, deformed hands, extra fingers, duplicate character, inconsistent face, age drift, costume drift, wrong weapon, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
+renderScenes();
+renderFinalPrompts();
+document.getElementById("finalStatus").textContent="✓ Scenes generated locally. Click 'Final AI Video Prompt ထုတ်ရန်' to build prompt.";
+}
+
+async function generateScenes(){
+if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim()){return alert("Story Input / Summary ထည့်ပါ။");}
+let total=durationSec(),btn=document.getElementById("sceneBtn");
+btn.disabled=true;btn.innerHTML="⏳ Generating Scenes...";
+
+try{
+let d=await callGemini(`Generate the complete progressive scene plan for the current story. Requested total duration is ${total} seconds. Each scene MUST be 10 seconds or less and all scene durations MUST sum exactly to ${total}.`);
+if(!Array.isArray(d.scenes)||!d.scenes.length){throw Error("No scenes returned");}
+state.scenes=normalizeScenes(d.scenes);
+let diff=totalScene()-total;
+if(diff!==0 && state.scenes.length>0){
+let last=state.scenes.length-1;
+state.scenes[last].duration=Math.max(1,Math.min(10,state.scenes[last].duration-diff));
+}
+state.lastFinal="";
+state.negative=d.negative_prompt||state.negative;
+state.thumb=d.thumbnail_prompt||"";
+state.thumbText=d.thumbnail_text||"";
+state.thumbNeg=d.thumbnail_negative_prompt||"";
+renderScenes();
+renderExtras();
+renderFinalPrompts();
+document.getElementById("finalStatus").textContent="✓ Scenes generated. Edit action/dialogue then click 'Final AI Video Prompt ထုတ်ရန်' below.";
+}catch(e){
+generateScenesLocal();
+document.getElementById("finalStatus").textContent="⚠️ AI Scene generation failed; local scene planner used. "+e.message;
+}
+btn.disabled=false;btn.innerHTML='🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>';
+}
+
+function renderExtras(){
+document.getElementById("thumbPrompt").textContent=state.thumb||`Create a striking ${stylePhrase()} ${val("Genre")} TikTok cover featuring the same locked main character and story world. Ratio 9:16. Strong facial emotion, one clear focal subject, cinematic lighting, clean composition, no clutter.`;
+document.getElementById("thumbText").textContent=state.thumbText||document.getElementById("title").value.trim()||"Story";
+}
+
+async function regenerate(){
+if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim()){return alert("Story Input / Summary ထည့်ပါ။");}
+document.getElementById("finalStatus").textContent="⏳ Regenerating...";
+try{
+let d=await callGemini("Regenerate a genuinely different creative version while preserving the exact story meaning, selected settings, locked character identities and continuity.");
+if(Array.isArray(d.scenes)){
+state.scenes=normalizeScenes(d.scenes);
+state.lastFinal="";
+renderScenes();
+renderFinalPrompts();
+}
+state.negative=d.negative_prompt||state.negative;
+renderExtras();
+document.getElementById("finalStatus").textContent="✓ Regenerated. Click 'Final AI Video Prompt ထုတ်ရန်' to build prompt.";
+}catch(e){document.getElementById("finalStatus").textContent="❌ "+e.message;}
+}
+
+function snapshotState(){
+return{
+part:state.part,title:document.getElementById("title").value,story:document.getElementById("story").value,
+summary:state.summary,blueprint:cloneData(state.blueprint),characters:cloneData(state.characters),
+scenes:cloneData(state.scenes),lastFinal:state.lastFinal,negative:state.negative,thumb:state.thumb,
+thumbText:state.thumbText,thumbNeg:state.thumbNeg,settings:settingsObj()
+}
+}
+
+function updatePreviousButton(){
+let b=document.getElementById("previousPart");
+if(!b)return;
+b.disabled=!(Object.keys(state.history).length>0||state.part>1);
+}
+
+function restoreSnapshot(snap){
+if(!snap)return;
+state.part=snap.part;state.summary=snap.summary||"";state.blueprint=cloneData(snap.blueprint);
+state.characters=cloneData(snap.characters)||[];state.scenes=cloneData(snap.scenes)||[];
+state.lastFinal=snap.lastFinal||"";state.negative=snap.negative||"";state.thumb=snap.thumb||"";
+state.thumbText=snap.thumbText||"";state.thumbNeg=snap.thumbNeg||"";
+document.getElementById("title").value=snap.title||"";
+document.getElementById("story").value=snap.story||"";
+document.getElementById("summary").value=state.summary;
+if(snap.settings){
+Object.entries(snap.settings).forEach(([k,v])=>{
+let el=document.getElementById("s_"+k.replaceAll(" ","_"));
+if(el){el.value=v;el.dispatchEvent(new Event("change"))}
+})
+}
+if(state.blueprint){renderBlueprint(state.blueprint)}
+renderChars();renderScenes();renderExtras();renderFinalPrompts();
+updatePreviousButton()
+}
+
+function previousPart(){
+state.history[state.part]=snapshotState();
+const parts=Object.keys(state.history).map(Number).filter(n=>n>=1).sort((a,b)=>a-b);
+if(!parts.length)return;
+const old=document.getElementById("previousPartPopup");
+if(old)old.remove();
+
+const overlay=document.createElement("div");
+overlay.id="previousPartPopup";
+overlay.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;";
+const box=document.createElement("div");
+box.style.cssText="width:min(360px,100%);max-height:75vh;background:#181818;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.5);color:#fff;display:flex;flex-direction:column;";
+const title=document.createElement("div");
+title.textContent="📚 Select Part";
+title.style.cssText="font-size:20px;font-weight:700;margin-bottom:14px;text-align:center;";
+const list=document.createElement("div");
+list.style.cssText="overflow-y:auto;max-height:50vh;display:flex;flex-direction:column;gap:8px;padding-right:4px;";
+
+parts.forEach(n=>{
+const btn=document.createElement("button");
+const isCurrent=n===state.part;
+btn.textContent=isCurrent?`Part ${n} (Current)`:`Part ${n}`;
+btn.style.cssText=`width:100%;padding:13px 14px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:${isCurrent?'#1e3a8a':'#242424'};color:#fff;font-size:16px;font-weight:600;cursor:pointer;text-align:left;`;
+btn.onclick=()=>{
+const snap=state.history[n];
+if(!snap){overlay.remove();return;}
+overlay.remove();
+restoreSnapshot(snap);
+};
+list.appendChild(btn);
+});
+
+const cancel=document.createElement("button");
+cancel.textContent="Cancel";
+cancel.style.cssText="width:100%;margin-top:14px;padding:12px;border:0;border-radius:10px;background:#333;color:#fff;font-size:15px;cursor:pointer;";
+cancel.onclick=()=>overlay.remove();
+box.appendChild(title);box.appendChild(list);box.appendChild(cancel);overlay.appendChild(box);document.body.appendChild(overlay);
+overlay.onclick=e=>{if(e.target===overlay)overlay.remove()};
+}
+
+async function continueStory(){
+const allParts=[state.part,...Object.keys(state.history).map(Number)];
+const maxPart=Math.max(...allParts);
+if(state.part<maxPart&&state.history[maxPart]){restoreSnapshot(state.history[maxPart]);}
+const fromPart=state.part,nextPart=fromPart+1,backup=snapshotState();
+state.history[fromPart]=backup;
+
+document.getElementById("finalStatus").textContent="⏳ Continuing story...";
+try{
+let d=await callGemini(`Continue the exact story into Part ${nextPart}. Do NOT restart. Return a new story_summary, story_blueprint, characters and scenes for the continuation.`);
+state.part=nextPart;
+if(d.story_summary){state.summary=d.story_summary;document.getElementById("summary").value=state.summary}
+if(d.story_blueprint){renderBlueprint(d.story_blueprint)}
+if(Array.isArray(d.characters)){state.characters=d.characters.map(c=>({...c,name:String(c.name||"Main Character").replace(/[^\x00-\x7F]/g,"").trim()||"Main Character",locked:true}))}
+if(Array.isArray(d.scenes)){state.scenes=normalizeScenes(d.scenes)}
+state.lastFinal="";
+renderChars();renderScenes();renderExtras();renderFinalPrompts();updatePreviousButton();
+document.getElementById("finalStatus").textContent=`✓ Part ${state.part} generated. Click 'Final AI Video Prompt ထုတ်ရန်' to build prompt.`;
+}catch(e){
+delete state.history[fromPart];
+document.getElementById("finalStatus").textContent="❌ "+e.message;
+updatePreviousButton();
+}
+}
+
+document.getElementById("saveApi").onclick=()=>{
+let k=document.getElementById("apiKey").value.replace(/[\u200B-\u200D\uFEFF]/g,"").trim();
+if(!k)return alert("API key ထည့်ပါ။");
+localStorage.setItem("gemini_api_key",k);
+document.getElementById("apiStatus").textContent="✓ Saved locally."
+};
+
+let storedApiKey=localStorage.getItem("gemini_api_key");
+if(storedApiKey){
+document.getElementById("apiKey").value=storedApiKey;
+document.getElementById("apiStatus").textContent="✓ Local API key loaded."
+}
+
+document.getElementById("testApi").onclick=async()=>{
+document.getElementById("apiStatus").textContent="⏳ Testing...";
+try{
+await callGemini("Return a JSON object with test:true only.");
+document.getElementById("apiStatus").textContent="✓ Gemini API connected.";
+}catch(e){document.getElementById("apiStatus").textContent="❌ "+e.message;}
+};
+
+document.getElementById("summaryBtn").onclick=makeSummary;
+document.getElementById("blueprintBtn").onclick=makeBlueprint;
+document.getElementById("autoDetectChars").onclick=autoDetect;
+document.getElementById("sceneBtn").onclick=generateScenes;
+document.getElementById("addCharBtn").onclick=()=>{
+state.characters.push({name:"Character",role:"Supporting Character",age:"",description:"",locked:true});
+renderChars();
+openCharacterModal(state.characters.length-1)
+};
+
+document.getElementById("buildFinalBtn").onclick=async()=>{
+if(!state.scenes.length){return alert("ဇာတ်ဝင်ခန်းများ (Scenes) မရှိသေးပါ။ Generate Scenes အရင်လုပ်ပါ။");}
+await buildFinalFromScenes();
+document.getElementById("finalStatus").textContent="✓ Final AI Video Prompt အောင်မြင်စွာ ထုတ်ပြီးပါပြီ။";
+};
+
+document.getElementById("regen").onclick=regenerate;
+document.getElementById("previousPart").onclick=previousPart;
+document.getElementById("continue").onclick=continueStory;
+
+document.getElementById("copySummary").onclick=e=>copyText(document.getElementById("summary").value,e.currentTarget);
+document.getElementById("copyFinal").onclick=e=>copyText(state.lastFinal||document.getElementById("finalPrompt").textContent,e.currentTarget);
+document.getElementById("copyThumb").onclick=e=>copyText(state.thumb||document.getElementById("thumbPrompt").textContent,e.currentTarget);
+document.getElementById("copyThumbText").onclick=e=>copyText(state.thumbText||document.getElementById("thumbText").textContent,e.currentTarget);
+
+document.getElementById("collapseSettings").onclick=()=>{
+let d=document.getElementById("settingsDetails");
+if(d){
+d.open=!d.open;
+let collapseBtn=document.getElementById("collapseSettings");
+if(collapseBtn){collapseBtn.textContent=d.open?"⌃":"⌄";}
+}
+};
+
+renderChars();
+renderExtras();
+updatePreviousButton();
+
+})();
+</script>
+</body>
+</html>
+  
